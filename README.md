@@ -1,5 +1,3 @@
-THIS IS AN AI GENERATED README, generally this is to outline how this should be implemented. The main solver content should likely be split up into multiple files that smenatically make sense to be split up.
-
 This is an AI generated guide but i think generally it should be used as a starter for building out the eval
 
 
