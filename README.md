@@ -1,4 +1,4 @@
-THIS IS AN AI GENERATED README, generally this is to outline how this should be implemented. The main solver content should likely be split up into multiple files that smenatically make sense to be split up
+THIS IS AN AI GENERATED README, generally this is to outline how this should be implemented. The main solver content would likely be split up into multiple files.
 
 
 # LLM Prediction Market Collusion Framework
