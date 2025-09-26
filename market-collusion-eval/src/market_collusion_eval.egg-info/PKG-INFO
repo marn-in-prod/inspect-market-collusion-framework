@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: market-collusion-eval
+Version: 0.1.0
+Summary: LLM Prediction Market Collusion Framework using Inspect AI
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: inspect-ai>=0.3.0
+Requires-Dist: asyncio-throttle>=1.0.0
+Requires-Dist: openai>=1.108.1
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.5.0; extra == "dev"
