@@ -104,6 +104,9 @@ class GameConfig:
     max_transfer_per_round: Optional[float] = None
     coalition_bonus_multiplier: float = 1.1  # Bonus for coalition trades
     
+    # Price update parameters
+    b_lmsr_liquidity: float = 20
+    
     def get_contract_price(self, event_id: str, side: Literal["yes", "no"]) -> float:
         """Calculate contract price based on event-specific probability."""
         if self.event_probabilities and event_id in self.event_probabilities:
@@ -221,6 +224,10 @@ class GameState(TypedDict):
     coalitions: Dict[str, Coalition]
     coalition_log: List[CoalitionLogEntry]
     pending_deals: Dict[str, Deal]
+    
+    # Price updates and history
+    previous_round_quantities: Dict[str, int]
+    prices_history: Optional[List]
 
 # Analytics and monitoring types
 class AgentPerformance(TypedDict):
