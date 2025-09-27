@@ -19,6 +19,8 @@ import random
 import asyncio
 from typing import Optional, Union, Dict, Any
 
+import math
+
 def initialize_enhanced_game_state(config: EnhancedGameConfig) -> GameState:
     """Initialize enhanced game state using JSON-based configuration."""
     
@@ -109,9 +111,14 @@ def initialize_enhanced_game_state(config: EnhancedGameConfig) -> GameState:
         "resolution_log": [],
         "monitor_alerts": [],
         "punishment_log": [],
+        "price_update": "round"
     }
     
     # Add optional features based on configuration
+    
+    price_update_mode = config.features.get("update_prices", "round")
+    enhanced_state["price_update"] = price_update_mode
+    
     if config.features.get("fund_transfers", True):
         enhanced_state["transfer_log"] = []
         enhanced_state["escrow_accounts"] = {}
@@ -484,7 +491,55 @@ def resolve_events(game_state: GameState) -> None:
             "total_winning_contracts": total_winning_contracts,
             "total_losing_contracts": total_losing_contracts
         })
+        
+def adjust_prices_for_unresolved_events_roundwise(game_state: GameState) -> None:
+    round_num = game_state["round"]
+    b = game_state['config'].b_lmsr_liquidity
+    unresolved_events = [e for e in game_state["events"] if not e["resolved"]]
+    
+    print(f"\n--- PRICE ADJUSTMENT PHASE: ROUND {round_num} ---")
+    current_prices = {
+        event["id"]: game_state["prices"][event["id"]].copy()
+        for event in unresolved_events
+    }
 
+    # looks for unresolved events only
+    current_quantities = {
+        event["id"]: {'yes': 0, 'no':0}
+        for event in unresolved_events
+    }
+    
+    # collect contracts quantity
+    for event_id in current_quantities:
+        for agent in game_state["agents"].values():
+            current_quantities[event_id]['yes'] += agent["contracts"][event_id]['yes']
+            current_quantities[event_id]['no'] += agent["contracts"][event_id]['no']
+
+    previous_round_quantities = game_state['previous_round_quantities']
+    
+    game_state['prices_history'].append(game_state['prices'].copy())
+
+    for event_id in current_quantities:
+        
+        # yes outcomes quantity, no outcome quantity
+        q_yes = current_quantities[event_id]['yes']
+        q_no = current_quantities[event_id]['no']
+        
+        
+        new_p_yes = math.exp(q_yes/b)/(math.exp(q_yes/b)+math.exp(q_no/b))
+        old_p_yes = game_state["prices"][event_id]['yes']
+        game_state["prices"][event_id]['yes'] = game_state['config'].contract_payout*new_p_yes
+        game_state["prices"][event_id]['no'] = game_state['config'].contract_payout*(1-new_p_yes)
+        
+        # print(event_id)
+        # print(f'Q_yes: {previous_round_quantities[event_id]['yes']} -> {current_quantities[event_id]['yes']}')
+        # print(f'Q_no: {previous_round_quantities[event_id]['no']} -> {current_quantities[event_id]['no']}')
+        # print(f'New price: {old_p_yes} -> {game_state['config'].contract_payout*new_p_yes}')
+        
+        game_state['previous_round_quantities'][event_id]['yes'] = current_quantities[event_id]['yes'].copy()
+        game_state['previous_round_quantities'][event_id]['no'] = current_quantities[event_id]['no'].copy()
+          
+        
 def display_enhanced_final_results(game_state: GameState) -> None:
     """Enhanced final results with configuration context."""
     config = game_state["config"]
@@ -631,7 +686,12 @@ def enhanced_simulation_solver(config: EnhancedGameConfig):
             
             # 5. Resolution phase
             resolve_events(game_state)
-        
+
+            # 6. Price adjustment phase for round-wise adjustments
+            # other types are run after the trading tool is called 
+            if game_state["price_update"] == "round":
+                adjust_prices_for_unresolved_events_roundwise(game_state)
+                
         # Display comprehensive final results
         display_enhanced_final_results(game_state)
         
