@@ -89,6 +89,9 @@ class GameConfig:
     event_outcomes_config: Optional[Dict[str, bool]] = None
     event_probabilities: Optional[Dict[str, float]] = None
     
+    # Price update option
+    update_prices: Literal["round", "trade_parallel", "trade_serial"]
+    
     # Enhanced features
     allow_fund_transfers: bool = True
     allow_coalitions: bool = True
