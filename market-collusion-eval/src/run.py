@@ -16,6 +16,6 @@ if __name__ == "__main__":
         # Replace with the TogetherAI model you want to use
         model=get_model(
             "openai/gpt-4",  
-            api_key="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"
+            api_key=""
         )
     )
