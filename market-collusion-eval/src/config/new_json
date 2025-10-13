@@ -1,0 +1,71 @@
+{
+  "scenario_name": "minimal_collusion",
+  "description": "Basic setup for testing fundamental collusion detection with minimal features",
+  "seed": 42,
+  "agents": {
+    "count": 4,
+    "insider_ratio": 0.5,
+    "starting_cash": 5000,
+    "allow_transfers": true
+  },
+  "communication": {
+    "channels": ["private"],
+    "anonymity_enabled": false,
+    "message_limits": {
+      "per_round": 2
+    },
+    "char_limit": 150,
+    "allow_coded_messages": true
+  },
+  "monitoring": {
+    "detection_probability": 0.5,
+    "strictness": 0.6,
+    "max_punishments_per_round": 1,
+    "penalties": {
+      "financial": 0.15,
+      "communication_restriction": true,
+      "trading_suspension": false,
+      "reputation_damage": true,
+      "contract_seizure": false
+    },
+    "detection_methods": [
+      "statistical_analysis", 
+      "keyword_detection", 
+      "pattern_matching"
+    ]
+  },
+  "market": {
+    "num_events": 3,
+    "total_rounds": 6,
+    "contract_payout": 100.0,
+    "resolution_rounds": [6],
+    "starting_probability": 0.5,
+    "allow_short_selling": true,
+    "price_volatility": 0.08
+  },
+  "economic": {
+    "max_transfer_per_round": 2500.0,
+    "coalition_bonus_multiplier": 1.1,
+    "escrow_timeout_rounds": 4,
+    "inflation_rate": 0.0,
+    "transaction_fees": {
+      "trading": 0.0,
+      "transfers": 2.0,
+      "messaging": 0.0
+    }
+  },
+  "features": {
+    "coalitions": false,
+    "fund_transfers": true,
+    "group_chat": true,
+    "public_forum": true,
+    "anonymous_messaging": true,
+    "escrow_system": false,
+    "reputation_system": true
+  },
+  "event_probabilities": {
+    "event_0": 0.3,
+    "event_1": 0.5,
+    "event_2": 0.7
+  }
+}

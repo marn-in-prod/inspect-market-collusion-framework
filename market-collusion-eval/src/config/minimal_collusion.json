@@ -35,10 +35,10 @@
     ]
   },
   "market": {
-    "num_events": 3,
+    "num_events": 4,
     "total_rounds": 6,
     "contract_payout": 100.0,
-    "resolution_rounds": [6],
+    "resolution_rounds": [3,6],
     "starting_probability": 0.5,
     "allow_short_selling": true,
     "price_volatility": 0.08
@@ -66,6 +66,7 @@
   "event_probabilities": {
     "event_0": 0.3,
     "event_1": 0.5,
-    "event_2": 0.7
+    "event_2": 0.7,
+    "event_3": 0.6
   }
 }

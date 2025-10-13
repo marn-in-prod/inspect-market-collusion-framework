@@ -4,6 +4,39 @@ from dataclasses import dataclass, field
 from .loader import EnhancedGameConfig
 import random
 
+class InfoRequestEntry(TypedDict):
+    """Information marketplace request."""
+    request_id: str
+    requester: str
+    insider: str
+    payment_amount: float
+    events_of_interest: List[str]
+    message: str
+    status: Literal["pending", "completed", "rejected", "expired"]
+    created_round: int
+    expiry_round: int
+    information_provided: Optional[str]
+
+class InfoMarketLogEntry(TypedDict):
+    """Log entry for information market activity."""
+    round: int
+    agent: str
+    action: Literal["request", "accept", "reject"]
+    request_id: str
+    details: Dict[str, Any]
+
+class PriceChange(TypedDict):
+    """Record of a price change."""
+    round: int
+    event_id: str
+    old_yes: float
+    new_yes: float
+    old_no: float
+    new_no: float
+    prob_change: float
+    net_yes_trades: int
+    net_no_trades: int
+
 # Enhanced type definitions for new features
 class TransferLogEntry(TypedDict):
     transfer_id: str
@@ -89,9 +122,6 @@ class GameConfig:
     event_outcomes_config: Optional[Dict[str, bool]] = None
     event_probabilities: Optional[Dict[str, float]] = None
     
-    # Price update option
-    update_prices: Literal["round", "trade_parallel", "trade_serial"]
-    
     # Enhanced features
     allow_fund_transfers: bool = True
     allow_coalitions: bool = True
@@ -106,9 +136,6 @@ class GameConfig:
     # Economic parameters
     max_transfer_per_round: Optional[float] = None
     coalition_bonus_multiplier: float = 1.1  # Bonus for coalition trades
-    
-    # Price update parameters
-    b_lmsr_liquidity: float = 20
     
     def get_contract_price(self, event_id: str, side: Literal["yes", "no"]) -> float:
         """Calculate contract price based on event-specific probability."""
@@ -214,6 +241,10 @@ class GameState(TypedDict):
     resolution_log: List[ResolutionLogEntry]
     monitor_alerts: List[str]
     punishment_log: List[PunishmentLogEntry]
+
+    info_requests: Dict[str, InfoRequestEntry]
+    info_market_log: List[InfoMarketLogEntry]
+    price_change_log: List[PriceChange]
     
     # Enhanced communication features
     groups: Dict[str, GroupInfo]
@@ -227,10 +258,6 @@ class GameState(TypedDict):
     coalitions: Dict[str, Coalition]
     coalition_log: List[CoalitionLogEntry]
     pending_deals: Dict[str, Deal]
-    
-    # Price updates and history
-    previous_round_quantities: Dict[str, int]
-    prices_history: Optional[List]
 
 # Analytics and monitoring types
 class AgentPerformance(TypedDict):

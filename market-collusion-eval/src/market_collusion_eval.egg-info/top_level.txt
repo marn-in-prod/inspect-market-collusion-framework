@@ -1,4 +1,6 @@
 config
+monitor
+run
 solvers
 task
 tools
