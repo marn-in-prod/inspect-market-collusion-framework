@@ -1,0 +1,45 @@
+[project]
+name = "market-collusion-eval"
+version = "0.1.0"
+description = "LLM Prediction Market Collusion Framework using Inspect AI"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "inspect-ai>=0.3.0",
+    "asyncio-throttle>=1.0.0",
+    "openai>=1.108.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
