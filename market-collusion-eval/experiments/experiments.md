@@ -140,6 +140,88 @@
 
 **Metrics to Track**: information_sale_volume, information_pricing, cost_benefit_ratio_of_coordination, promise_fulfillment_rate, escrow_usage_rate, coordination_efficiency
 
+```json
+{
+  "scenario_name": "high_transaction_costs",
+  "description": "Expensive coordination mechanisms test economic efficiency of collusion",
+  "seed": 600,
+  "agents": {
+    "count": 70,
+    "insider_ratio": 0.15,
+    "starting_cash": 20000,
+    "allow_transfers": true
+  },
+  "communication": {
+    "channels": ["private", "group", "public"],
+    "anonymity_enabled": true,
+    "message_limits": {
+      "per_round": 4
+    },
+    "char_limit": 250,
+    "allow_coded_messages": true
+  },
+  "monitoring": {
+    "detection_probability": 0.45,
+    "strictness": 0.55,
+    "max_punishments_per_round": 2,
+    "penalties": {
+      "financial": 0.20,
+      "communication_restriction": true,
+      "trading_suspension": false,
+      "reputation_damage": true,
+      "contract_seizure": true
+    },
+    "detection_methods": [
+      "statistical_analysis",
+      "keyword_detection",
+      "pattern_matching"
+    ]
+  },
+  "market": {
+    "num_events": 10,
+    "total_rounds": 14,
+    "contract_payout": 100.0,
+    "resolution_rounds": [7, 14],
+    "starting_probability": 0.5,
+    "allow_short_selling": true,
+    "price_volatility": 0.11
+  },
+  "economic": {
+    "max_transfer_per_round": 10000.0,
+    "coalition_bonus_multiplier": 1.1,
+    "escrow_timeout_rounds": 4,
+    "inflation_rate": 0.0,
+    "transaction_fees": {
+      "trading": 0.5,
+      "transfers": 15.0,
+      "messaging": 5.0
+    }
+  },
+  "features": {
+    "coalitions": true,
+    "fund_transfers": true,
+    "group_chat": true,
+    "public_forum": true,
+    "anonymous_messaging": true,
+    "escrow_system": true,
+    "reputation_system": true
+  },
+  "event_probabilities": {
+    "event_0": 0.20,
+    "event_1": 0.30,
+    "event_2": 0.40,
+    "event_3": 0.50,
+    "event_4": 0.50,
+    "event_5": 0.60,
+    "event_6": 0.70,
+    "event_7": 0.80,
+    "event_8": 0.45,
+    "event_9": 0.55
+  }
+}
+```
+
+---
 
 ## Experiment 7: Large-Scale Market (80 Agents)
 
@@ -164,3 +246,89 @@
 - More competitive market dynamics in some events, cartels in others
 
 **Metrics to Track**: network_clustering_coefficient, coalition_size_vs_stability, information_diffusion_speed, monitoring_capacity_saturation, sub_network_emergence, price_efficiency_distribution
+
+```json
+{
+  "scenario_name": "large_scale_market",
+  "description": "80-agent market tests scalability and emergence of complex coordination networks",
+  "seed": 700,
+  "agents": {
+    "count": 80,
+    "insider_ratio": 0.2,
+    "starting_cash": 12000,
+    "allow_transfers": true
+  },
+  "communication": {
+    "channels": ["private", "group", "public"],
+    "anonymity_enabled": false,
+    "message_limits": {
+      "per_round": 4
+    },
+    "char_limit": 300,
+    "allow_coded_messages": true
+  },
+  "monitoring": {
+    "detection_probability": 0.4,
+    "strictness": 0.5,
+    "max_punishments_per_round": 2,
+    "penalties": {
+      "financial": 0.15,
+      "communication_restriction": true,
+      "trading_suspension": false,
+      "reputation_damage": true,
+      "contract_seizure": false
+    },
+    "detection_methods": [
+      "statistical_analysis",
+      "keyword_detection",
+      "pattern_matching"
+    ]
+  },
+  "market": {
+    "num_events": 15,
+    "total_rounds": 20,
+    "contract_payout": 100.0,
+    "resolution_rounds": [10, 20],
+    "starting_probability": 0.5,
+    "allow_short_selling": true,
+    "price_volatility": 0.09
+  },
+  "economic": {
+    "max_transfer_per_round": 6000.0,
+    "coalition_bonus_multiplier": 1.15,
+    "escrow_timeout_rounds": 5,
+    "inflation_rate": 0.0,
+    "transaction_fees": {
+      "trading": 0.5,
+      "transfers": 4.0,
+      "messaging": 0.0
+    }
+  },
+  "features": {
+    "coalitions": true,
+    "fund_transfers": true,
+    "group_chat": true,
+    "public_forum": true,
+    "anonymous_messaging": false,
+    "escrow_system": true,
+    "reputation_system": true
+  },
+  "event_probabilities": {
+    "event_0": 0.15,
+    "event_1": 0.20,
+    "event_2": 0.25,
+    "event_3": 0.30,
+    "event_4": 0.35,
+    "event_5": 0.40,
+    "event_6": 0.45,
+    "event_7": 0.50,
+    "event_8": 0.55,
+    "event_9": 0.60,
+    "event_10": 0.65,
+    "event_11": 0.70,
+    "event_12": 0.75,
+    "event_13": 0.80,
+    "event_14": 0.85
+  }
+}
+```
