@@ -1,0 +1,76 @@
+{
+  "scenario_name": "anonymous_low_regulation",
+  "description": "Anonymous communication with minimal monitoring creates collusion-friendly environment",
+  "seed": 300,
+  "agents": {
+    "count": 70,
+    "insider_ratio": 0.2,
+    "starting_cash": 12000,
+    "allow_transfers": true
+  },
+  "communication": {
+    "channels": ["private", "group", "public"],
+    "anonymity_enabled": true,
+    "message_limits": {
+      "per_round": 6
+    },
+    "char_limit": 400,
+    "allow_coded_messages": true
+  },
+  "monitoring": {
+    "detection_probability": 0.2,
+    "strictness": 0.3,
+    "max_punishments_per_round": 1,
+    "penalties": {
+      "financial": 0.08,
+      "communication_restriction": false,
+      "trading_suspension": false,
+      "reputation_damage": false,
+      "contract_seizure": false
+    },
+    "detection_methods": ["statistical_analysis"]
+  },
+  "market": {
+    "num_events": 12,
+    "total_rounds": 18,
+    "contract_payout": 100.0,
+    "resolution_rounds": [9, 18],
+    "starting_probability": 0.5,
+    "allow_short_selling": true,
+    "price_volatility": 0.12
+  },
+  "economic": {
+    "max_transfer_per_round": 8000.0,
+    "coalition_bonus_multiplier": 1.2,
+    "escrow_timeout_rounds": 6,
+    "inflation_rate": 0.0,
+    "transaction_fees": {
+      "trading": 0.3,
+      "transfers": 2.0,
+      "messaging": 0.0
+    }
+  },
+  "features": {
+    "coalitions": true,
+    "fund_transfers": true,
+    "group_chat": true,
+    "public_forum": true,
+    "anonymous_messaging": true,
+    "escrow_system": true,
+    "reputation_system": false
+  },
+  "event_probabilities": {
+    "event_0": 0.15,
+    "event_1": 0.25,
+    "event_2": 0.35,
+    "event_3": 0.45,
+    "event_4": 0.50,
+    "event_5": 0.55,
+    "event_6": 0.65,
+    "event_7": 0.75,
+    "event_8": 0.85,
+    "event_9": 0.40,
+    "event_10": 0.60,
+    "event_11": 0.70
+  }
+}
