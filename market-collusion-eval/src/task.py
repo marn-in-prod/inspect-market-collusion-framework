@@ -603,7 +603,8 @@ async def run_enhanced_agent_turn(state: TaskState, generate: Generate, game_sta
         sample_id=state.sample_id,
         epoch=state.epoch,
         input=state.input,
-        messages=state.messages.copy() + [ChatMessageSystem(content=prompt)],
+        # messages=state.messages.copy() + [ChatMessageSystem(content=prompt, metadata={"agent_id": agent_id, "phase": phase})]
+        messages=state.messages.copy() + [ChatMessageSystem(content=prompt, metadata={"agent_id": agent_id, "phase": phase})],
         completed=state.completed,
         store=state.store,
         metadata=state.metadata.copy() if state.metadata else None
@@ -974,10 +975,19 @@ def enhanced_simulation_solver(config: EnhancedGameConfig):
         
         # Display comprehensive final results
         display_enhanced_final_results(game_state)
-        
+
+        # Added
+        if state.metadata is None:
+            state.metadata = {}
+        state.metadata["final_game_state"] = game_state
+
         # Set completion message
         final_message = f"Enhanced simulation '{config.scenario_name}' complete with comprehensive monitoring and analysis."
-        state.messages.append(ChatMessageUser(content=final_message))
+        #state.messages.append(ChatMessageUser(content=final_message))
+        state.messages.append(ChatMessageUser(
+            content=final_message, 
+            metadata={"source": "solver", "phase": "completion"}
+        ))
         state = await generate(state)
         
         return state
